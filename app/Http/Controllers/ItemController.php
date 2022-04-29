@@ -5,17 +5,38 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Models\Item;
+use App\Services\ItemService;
+use Exception;
 
 class ItemController extends Controller
 {
+
+    protected $itemService;
+
+    public function __construct(ItemService $itemService)
+    {
+        $this->itemService = $itemService;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAll()
     {
-        //
+        $result = ['status' => 200];
+
+        try {
+            $result['data'] = $this->itemService->getAll();
+        } catch (Exception $e) {
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
+
+        return view('index');
+        //return response()->json($result, $result['status']);
     }
 
     /**
