@@ -37,4 +37,9 @@ class ItemService
 
         return $result;
     }
+
+    public function getById($id)
+    {
+        return $this->itemRepository->getId($id);
+    }
 }

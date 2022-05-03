@@ -42,11 +42,11 @@
                 <th>Stock</th>
 
             </tr>
-            <tr>
-                <td>{{ $name ?? '' }}</td>
-                <td>Maria Anders</td>
-                <td>Germany</td>
-            </tr>
+            @forelse ($items ?? '' as $key=>$item)
+                    <tr>{{ $item->name }}</tr>
+            @empty
+                
+            @endforelse
         </table> 
     </body>
 </html>

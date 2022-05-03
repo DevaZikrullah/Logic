@@ -26,8 +26,10 @@ class ItemController extends Controller
     {
         $result = ['status' => 200];
 
+        $items = $this->itemService->getAll();
+
         try {
-            $result['data'] = $this->itemService->getAll();
+            $result['data'] = $items  ;
         } catch (Exception $e) {
             $result = [
                 'status' => 500,
@@ -35,8 +37,7 @@ class ItemController extends Controller
             ];
         }
 
-        return view('index');
-        //return response()->json($result, $result['status']);
+        return response()->json($result, $result['status']);
     }
 
     /**
@@ -66,9 +67,19 @@ class ItemController extends Controller
      * @param  \App\Models\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show($id)
     {
-        //
+        $result = ['status' => 200];
+
+        try {
+            $result['data'] = $this->itemService->getById($id);
+        } catch (Exception $e) {
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+        }
+        return response()->json($result, $result['status']);
     }
 
     /**

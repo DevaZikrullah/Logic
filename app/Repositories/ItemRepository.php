@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Item;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ItemRepository
 {
@@ -25,15 +25,27 @@ class ItemRepository
     {
         $item = new $this->item;
 
-        $item->nama_item = $data['nama_item'];
+        $item->name = $data['name'];
         $item->desc = $data['desc'];
-        $item->harga = $data['harga'];
+        $item->type = $data['type'];
         $item->stock = $data['stock'];
+        $item->price = $data['price'];
+
+
 
         $item->save();
 
         return $item->fresh();
         
+    }
+
+    public function getId($id)
+    {
+        return $this->item
+        ->where('_id', $id)
+        ->value('stock');
+
+        return $this->item;
     }
 }
 
